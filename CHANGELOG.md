@@ -1,5 +1,31 @@
 # Changelog
 
+## 1.0.0 (2026-10-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* Use a Symbol for attaching the default namespace to the store
+* Use a Symbol for attaching the store to the global  ([#9](https://github.com/FotoVerite/gulp-sparkles/issues/9))
+* Normalize repository, dropping node <10.13 support ([#6](https://github.com/FotoVerite/gulp-sparkles/issues/6))
+
+### Features
+
+* Add module for accessing legacy store ([#10](https://github.com/FotoVerite/gulp-sparkles/issues/10)) ([7f8b667](https://github.com/FotoVerite/gulp-sparkles/commit/7f8b6678fe3ec8449f47eb156b91ce5150ed9348))
+* Use a Symbol for attaching the default namespace to the store ([2196fb1](https://github.com/FotoVerite/gulp-sparkles/commit/2196fb1503f14f02c9422566d1e3635aa93e6ac0))
+* Use a Symbol for attaching the store to the global  ([#9](https://github.com/FotoVerite/gulp-sparkles/issues/9)) ([2196fb1](https://github.com/FotoVerite/gulp-sparkles/commit/2196fb1503f14f02c9422566d1e3635aa93e6ac0))
+* Use Symbol.for so other applications can create the same Symbol ([2196fb1](https://github.com/FotoVerite/gulp-sparkles/commit/2196fb1503f14f02c9422566d1e3635aa93e6ac0))
+
+
+### Bug Fixes
+
+* Correct a typo in global assignment ([2bfd37f](https://github.com/FotoVerite/gulp-sparkles/commit/2bfd37fbf44920d2df4bc5d309974236d185a81c))
+
+
+### Miscellaneous Chores
+
+* Normalize repository, dropping node &lt;10.13 support ([#6](https://github.com/FotoVerite/gulp-sparkles/issues/6)) ([6d6f7a8](https://github.com/FotoVerite/gulp-sparkles/commit/6d6f7a8633a437c474efb8a1768b3617f0f8e87d))
+
 ## [2.1.0](https://www.github.com/gulpjs/sparkles/compare/v2.0.0...v2.1.0) (2024-03-23)
 
 
