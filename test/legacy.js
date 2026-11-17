@@ -8,9 +8,9 @@ import sparkles from "../legacy.js";
 
 describe("legacy: sparkles()", function () {
   describe("behavior on global", function () {
-    var ee;
-    var storeNamespace = "store@sparkles";
-    var defaultNamespace = "default";
+    let ee;
+    const storeNamespace = "store@sparkles";
+    const defaultNamespace = "default";
 
     beforeEach(function () {
       ee = sparkles();
@@ -42,14 +42,14 @@ describe("legacy: sparkles()", function () {
   });
 
   it("should get the default emitter if namespace is not specified", function () {
-    var ee = sparkles();
+    const ee = sparkles();
     assert.ok(ee instanceof EventEmitter);
 
     assert.strictEqual(sparkles(), ee);
   });
 
   it("should get an emitter for a specified namespace", function () {
-    var ee = sparkles("ns1");
+    const ee = sparkles("ns1");
     assert.ok(ee instanceof EventEmitter);
 
     assert.notStrictEqual(sparkles(), ee);
@@ -59,8 +59,8 @@ describe("legacy: sparkles()", function () {
   });
 
   it("should remove and re-create emitter in the store", function () {
-    var ee0 = sparkles();
-    var ee1 = sparkles("ns1");
+    const ee0 = sparkles();
+    const ee1 = sparkles("ns1");
 
     ee0.remove();
     assert.notStrictEqual(sparkles(), ee0);
@@ -74,7 +74,7 @@ describe("legacy: sparkles()", function () {
 describe("legacy: sparkles.exists()", function () {
   it("checks if a namespace has been defined", function () {
     assert.strictEqual(sparkles.exists("test"), false);
-    var ee = sparkles("test");
+    const ee = sparkles("test");
     assert.strictEqual(sparkles.exists("test"), true);
     ee.remove();
     assert.strictEqual(sparkles.exists("test"), false);
@@ -82,8 +82,8 @@ describe("legacy: sparkles.exists()", function () {
 });
 
 describe("legacy: namespace", function () {
-  var storeNamespace = "store@sparkles";
-  var defaultNamespace = "default";
+  const storeNamespace = "store@sparkles";
+  const defaultNamespace = "default";
 
   afterEach(function () {
     delete global[storeNamespace][defaultNamespace];
@@ -91,19 +91,19 @@ describe("legacy: namespace", function () {
   });
 
   it("should use an EE from sparkles namespace if it already exists", function () {
-    var ee = (global[storeNamespace][defaultNamespace] = new EventEmitter());
+    const ee = (global[storeNamespace][defaultNamespace] = new EventEmitter());
     ee.custom = "ee";
 
-    var emitter = sparkles();
+    const emitter = sparkles();
 
     assert.strictEqual(emitter.custom, "ee");
   });
 
   it("should allow custom namespaces", function () {
-    var ee = (global[storeNamespace].customNamespace = new EventEmitter());
+    const ee = (global[storeNamespace].customNamespace = new EventEmitter());
     ee.custom = true;
 
-    var emitter = sparkles("customNamespace");
+    const emitter = sparkles("customNamespace");
 
     assert.strictEqual(emitter.custom, true);
   });

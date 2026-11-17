@@ -8,9 +8,9 @@ import sparkles from "../index.js";
 
 describe("sparkles()", function () {
   describe("behavior on global", function () {
-    var ee;
-    var storeSymbol = Symbol.for("sparkles:store");
-    var namespaceSymbol = Symbol.for("sparkles:namespace");
+    let ee;
+    const storeSymbol = Symbol.for("sparkles:store");
+    const namespaceSymbol = Symbol.for("sparkles:namespace");
 
     beforeEach(function () {
       ee = sparkles();
@@ -40,13 +40,13 @@ describe("sparkles()", function () {
   });
 
   it("should get the default emitter if namespace is not specified", function () {
-    var ee = sparkles();
+    const ee = sparkles();
     assert.ok(ee instanceof EventEmitter);
     assert.strictEqual(sparkles(), ee);
   });
 
   it("should get an emitter for a specified namespace", function () {
-    var ee = sparkles("ns1");
+    const ee = sparkles("ns1");
     assert.ok(ee instanceof EventEmitter);
 
     assert.notStrictEqual(sparkles(), ee);
@@ -56,8 +56,8 @@ describe("sparkles()", function () {
   });
 
   it("should remove and re-create emitter in the store", function () {
-    var ee0 = sparkles();
-    var ee1 = sparkles("ns1");
+    const ee0 = sparkles();
+    const ee1 = sparkles("ns1");
 
     ee0.remove();
     assert.notStrictEqual(sparkles(), ee0);
@@ -71,7 +71,7 @@ describe("sparkles()", function () {
 describe("sparkles.exists()", function () {
   it("checks if a namespace has been defined", function () {
     assert.strictEqual(sparkles.exists("test"), false);
-    var ee = sparkles("test");
+    const ee = sparkles("test");
     assert.strictEqual(sparkles.exists("test"), true);
     ee.remove();
     assert.strictEqual(sparkles.exists("test"), false);
@@ -79,8 +79,8 @@ describe("sparkles.exists()", function () {
 });
 
 describe("namespace", function () {
-  var storeSymbol = Symbol.for("sparkles:store");
-  var namespaceSymbol = Symbol.for("sparkles:namespace");
+  const storeSymbol = Symbol.for("sparkles:store");
+  const namespaceSymbol = Symbol.for("sparkles:namespace");
 
   beforeEach(function () {
     global[storeSymbol] = {};
@@ -91,19 +91,19 @@ describe("namespace", function () {
   });
 
   it("should use an EE from sparkles namespace if it already exists", function () {
-    var ee = (global[storeSymbol][namespaceSymbol] = new EventEmitter());
+    const ee = (global[storeSymbol][namespaceSymbol] = new EventEmitter());
     ee.custom = "ee";
 
-    var emitter = sparkles();
+    const emitter = sparkles();
 
     assert.strictEqual(emitter.custom, "ee");
   });
 
   it("should allow custom namespaces", function () {
-    var ee = (global[storeSymbol].customNamespace = new EventEmitter());
+    const ee = (global[storeSymbol].customNamespace = new EventEmitter());
     ee.custom = true;
 
-    var emitter = sparkles("customNamespace");
+    const emitter = sparkles("customNamespace");
 
     assert.strictEqual(emitter.custom, true);
   });

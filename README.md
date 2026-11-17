@@ -21,7 +21,7 @@ Note: If you put an event handler in a file in your application, that file must 
 ```js
 import sparkles from "sparkles";
 
-var sparkles = sparkles(); // make sure to call the function
+const sparkles = sparkles(); // make sure to call the function
 
 sparkles.on("my-event", function (evt) {
   console.log("my-event handled", evt);

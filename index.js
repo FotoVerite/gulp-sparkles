@@ -2,11 +2,29 @@
 
 import { EventEmitter } from "events";
 
-var sparklesNamespace = Symbol.for("sparkles:store");
-var defaultNamespace = Symbol.for("sparkles:namespace");
+const sparklesNamespace = Symbol.for("sparkles:store");
+const defaultNamespace = Symbol.for("sparkles:namespace");
+
+class SparklesEmitter extends EventEmitter {
+  #store;
+  #namespace;
+
+  constructor(store, namespace) {
+    super();
+    this.setMaxListeners(0);
+
+    this.#store = store;
+    this.#namespace = namespace;
+  }
+
+  remove() {
+    this.removeAllListeners();
+    delete this.#store[this.#namespace];
+  }
+}
 
 function getStore() {
-  var store = global[sparklesNamespace];
+  let store = global[sparklesNamespace];
 
   if (!store) {
     store = global[sparklesNamespace] = {};
@@ -16,26 +34,21 @@ function getStore() {
 }
 
 function getEmitter(namespace) {
-  var store = getStore();
+  const store = getStore();
 
   namespace = namespace || defaultNamespace;
 
-  var ee = store[namespace];
+  let ee = store[namespace];
 
   if (!ee) {
-    ee = store[namespace] = new EventEmitter();
-    ee.setMaxListeners(0);
-    ee.remove = function remove() {
-      ee.removeAllListeners();
-      delete store[namespace];
-    };
+    ee = store[namespace] = new SparklesEmitter(store, namespace);
   }
 
   return ee;
 }
 
 function exists(namespace) {
-  var store = getStore();
+  const store = getStore();
 
   return !!store[namespace];
 }
