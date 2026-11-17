@@ -1,10 +1,10 @@
 "use strict";
 
-var assert = require("node:assert");
-var { afterEach, beforeEach, describe, it } = require("node:test");
-var { EventEmitter } = require("node:events");
+import assert from "node:assert";
+import { afterEach, beforeEach, describe, it } from "node:test";
+import { EventEmitter } from "node:events";
 
-var sparkles = require("../legacy.js");
+import sparkles from "../legacy.js";
 
 describe("legacy: sparkles()", function () {
   describe("behavior on global", function () {
@@ -82,32 +82,29 @@ describe("legacy: sparkles.exists()", function () {
 });
 
 describe("legacy: namespace", function () {
-  var storeNamespace = Symbol.for("sparkles:store");
-  var defaultNamespace = Symbol.for("sparkles:namespace");
-
-  beforeEach(function () {
-    global[storeNamespace] = {};
-  });
+  var storeNamespace = "store@sparkles";
+  var defaultNamespace = "default";
 
   afterEach(function () {
-    delete global[storeNamespace];
+    delete global[storeNamespace][defaultNamespace];
+    delete global[storeNamespace].customNamespace;
   });
 
   it("should use an EE from sparkles namespace if it already exists", function () {
     var ee = (global[storeNamespace][defaultNamespace] = new EventEmitter());
     ee.custom = "ee";
 
-    var sparkles = require("../")();
+    var emitter = sparkles();
 
-    assert.strictEqual(sparkles.custom, "ee");
+    assert.strictEqual(emitter.custom, "ee");
   });
 
   it("should allow custom namespaces", function () {
     var ee = (global[storeNamespace].customNamespace = new EventEmitter());
     ee.custom = true;
 
-    var sparkles = require("../")("customNamespace");
+    var emitter = sparkles("customNamespace");
 
-    assert.strictEqual(sparkles.custom, true);
+    assert.strictEqual(emitter.custom, true);
   });
 });

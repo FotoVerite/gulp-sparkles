@@ -1,10 +1,10 @@
 "use strict";
 
-var assert = require("node:assert");
-var { afterEach, beforeEach, describe, it } = require("node:test");
-var { EventEmitter } = require("node:events");
+import assert from "node:assert";
+import { afterEach, beforeEach, describe, it } from "node:test";
+import { EventEmitter } from "node:events";
 
-var sparkles = require("../");
+import sparkles from "../index.js";
 
 describe("sparkles()", function () {
   describe("behavior on global", function () {
@@ -94,17 +94,17 @@ describe("namespace", function () {
     var ee = (global[storeSymbol][namespaceSymbol] = new EventEmitter());
     ee.custom = "ee";
 
-    var sparkles = require("../")();
+    var emitter = sparkles();
 
-    assert.strictEqual(sparkles.custom, "ee");
+    assert.strictEqual(emitter.custom, "ee");
   });
 
   it("should allow custom namespaces", function () {
     var ee = (global[storeSymbol].customNamespace = new EventEmitter());
     ee.custom = true;
 
-    var sparkles = require("../")("customNamespace");
+    var emitter = sparkles("customNamespace");
 
-    assert.strictEqual(sparkles.custom, true);
+    assert.strictEqual(emitter.custom, true);
   });
 });
